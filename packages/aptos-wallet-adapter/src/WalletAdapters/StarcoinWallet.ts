@@ -62,7 +62,7 @@ interface IStarcoinWallet {
 }
 
 interface StarcoinWindow extends Window {
-  starcoin?: IStarcoinWallet;
+  starcoin?: any;
 }
 
 declare const window: StarcoinWindow;
@@ -71,7 +71,7 @@ export const StarcoinWalletName = 'Starcoin' as WalletName<'Starcoin'>;
 
 export interface StarcoinWalletAdapterConfig {
   provider?: IStarcoinWallet;
-  // network?: WalletAdapterNetwork;
+  network?: WalletAdapterNetwork;
   timeout?: number;
 }
 
@@ -110,7 +110,7 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
     super();
 
     this._provider = typeof window !== 'undefined' ? window.starcoin : undefined;
-    this._network = undefined;
+    this._network = null;
     this._timeout = timeout;
     this._connecting = false;
     this._wallet = null;
@@ -169,29 +169,36 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
 
       const provider = this._provider || window.starcoin;
       const isConnected = await provider?.isConnected();
+      console.log(isConnected, '???', window.starcoin)
       if (isConnected) {
-        await provider?.disconnect();
+        // await provider?._handleDisconnect();
       }
-      const response = await provider?.connect();
+      const newAccounts = await window.starcoin.request({
+        method: 'stc_requestAccounts',
+      })
 
-      if (!response) {
+      // const response = await provider?.connect();
+
+      if (!newAccounts) {
         throw new WalletNotConnectedError('No connect response');
       }
 
-      const walletAccount = response.address;
-      const publicKey = response.publicKey;
+      const walletAccount = newAccounts;
+      // const publicKey = response.publicKey;
       if (walletAccount) {
         this._wallet = {
           address: walletAccount,
-          publicKey,
+          // publicKey,
           isConnected: true
         };
 
         try {
-          const networkInfo = await provider?.network();
-          this._network = networkInfo.name;
-          this._chainId = networkInfo.chainId;
-          this._api = networkInfo.api;
+          const networkInfo = await window.starcoin.request({
+            method: 'chain.id',
+          })
+          this._network = networkInfo.id;
+          this._chainId = `0x${networkInfo.id.toString(16)}`;
+          // this._api = networkInfo.api;
         } catch (error: any) {
           const errMsg = error.message;
           this.emit('error', new WalletGetNetworkError(errMsg));
@@ -293,15 +300,15 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
           }
           return;
         }
-        const newPublicKey = await provider?.publicKey();
+        // const newPublicKey = await provider?.publicKey();
         this._wallet = {
           ...this._wallet,
           address: newAccount,
-          publicKey: newPublicKey
+          // publicKey: newPublicKey
         };
         this.emit('accountChange', newAccount);
       };
-      await provider?.onAccountChange(handleAccountChange);
+      await provider?.on('accountsChanged', handleAccountChange)
     } catch (error: any) {
       const errMsg = error.message;
       this.emit('error', new WalletAccountChangeError(errMsg));
@@ -314,13 +321,13 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
       const wallet = this._wallet;
       const provider = this._provider || window.starcoin;
       if (!wallet || !provider) throw new WalletNotConnectedError();
-      const handleNetworkChange = (network: NetworkInfo) => {
-        this._network = network.name;
-        this._api = network.api;
-        this._chainId = network.chainId;
+      const handleNetworkChange = (network: WalletAdapterNetwork) => {
+        this._network = network;
+        // this._api = network.api;
+        // this._chainId = network.chainId;
         this.emit('networkChange', this._network);
       };
-      await provider?.onNetworkChange(handleNetworkChange);
+      await provider?.on('networkChanged', handleNetworkChange)
     } catch (error: any) {
       const errMsg = error.message;
       this.emit('error', new WalletNetworkChangeError(errMsg));
