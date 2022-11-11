@@ -32,11 +32,13 @@
     "@fewcha/web3": "0.1.32",
     "@keystonehq/aptossnap-adapter": "^0.2.8",
     "@solana/web3.js": "^1.66.2",
-    "aptos": "^1.3.17",
+    "@starcoin/starcoin": "^2.3.1",
+    "aptos": "^1.3.16",
+    "bignumber.js": "^9.1.0",
     "eventemitter3": "^4.0.7",
     "js-sha3": "^0.8.0",
     "msafe-iframe": "^1.0.8",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.X.X || 17.X.X",
+    "react-dom": "^18.X.X || 17.X.X"
   }
 }

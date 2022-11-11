@@ -21,6 +21,10 @@ import {
   WalletName,
   WalletReadyState
 } from './BaseAdapter';
+import { providers, utils, bcs } from '@starcoin/starcoin'
+import { hexlify } from '@ethersproject/bytes'
+import BigNumber from 'bignumber.js'
+import { isConstructorDeclaration } from 'typescript';
 
 interface ConnectStarcoinAccount {
   address: MaybeHexString;
@@ -101,6 +105,7 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
   protected _connecting: boolean;
 
   protected _wallet: StarcoinAccount | null;
+  protected _nodeUrlMap: {[key: string]: string};
 
   constructor({
     // provider,
@@ -114,6 +119,13 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
     this._timeout = timeout;
     this._connecting = false;
     this._wallet = null;
+    this._nodeUrlMap = {
+      '1': 'https://main-seed.starcoin.org',
+      '2': 'https://proxima-seed.starcoin.org',
+      '251': 'https://barnard-seed.starcoin.org',
+      '253': 'https://halley-seed.starcoin.org',
+      '254': 'http://localhost:9850',
+    }
 
     if (typeof window !== 'undefined' && this._readyState !== WalletReadyState.Unsupported) {
       scopePollingDetectionStrategy(() => {
@@ -169,7 +181,7 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
 
       const provider = this._provider || window.starcoin;
       const isConnected = await provider?.isConnected();
-      console.log(isConnected, '???', window.starcoin)
+
       if (isConnected) {
         // await provider?._handleDisconnect();
       }
@@ -216,32 +228,85 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
   }
 
   async disconnect(): Promise<void> {
-    const wallet = this._wallet;
-    const provider = this._provider || window.starcoin;
-    if (wallet) {
-      this._wallet = null;
+    // const wallet = this._wallet;
+    // const provider = this._provider || window.starcoin;
+    // if (wallet) {
+    //   this._wallet = null;
 
-      try {
-        await provider?.disconnect();
-      } catch (error: any) {
-        this.emit('error', new WalletDisconnectionError(error?.message, error));
-      }
-    }
+    //   try {
+    //     await provider?.disconnect();
+    //   } catch (error: any) {
+    //     this.emit('error', new WalletDisconnectionError(error?.message, error));
+    //   }
+    // }
 
-    this.emit('disconnect');
+    // this.emit('disconnect');
+    throw new Error('No Disconnect');
   }
 
   async signTransaction(
-    transactionPyld: Types.TransactionPayload,
+    transactionPyld: any,
     options?: any
-  ): Promise<Uint8Array> {
+  ): Promise<any> {
     try {
+      // const wallet = this._wallet;
+      // const provider = this._provider || window.starcoin;
+      // if (!wallet || !provider) throw new WalletNotConnectedError();
+      // const response = await provider?.getSigner().signTransaction(transactionPyld, options);
+
+      // return response as Uint8Array;
+
       const wallet = this._wallet;
       const provider = this._provider || window.starcoin;
       if (!wallet || !provider) throw new WalletNotConnectedError();
-      const response = await provider?.signTransaction(transactionPyld, options);
 
-      return response as Uint8Array;
+      const functionId = '0x1::TransferScripts::peer_to_peer_v2';
+      const strTypeArgs = ['0x1::STC::STC'];
+      const toAccount = transactionPyld.arguments[0];
+
+      if (!toAccount) {
+        window.alert('Invalid To: can not be empty!')
+        return false
+      }
+      const sendAmount = parseFloat(transactionPyld.arguments[1]);
+      if (sendAmount <= 0) {
+        // eslint-disable-next-line no-alert
+        window.alert('Invalid sendAmount: should be a number!')
+        return false
+      }
+      const BIG_NUMBER_NANO_STC_MULTIPLIER = new BigNumber('1000000000');
+      const sendAmountSTC = new BigNumber(String(sendAmount), 10);
+      const sendAmountNanoSTC = sendAmountSTC.times(
+        BIG_NUMBER_NANO_STC_MULTIPLIER
+      );
+      const args = [toAccount, sendAmountNanoSTC]
+      const nodeUrl = this._nodeUrlMap[window.starcoin.networkVersion]
+      const scriptFunction = await utils.tx.encodeScriptFunctionByResolve(
+        functionId,
+        strTypeArgs,
+        args,
+        nodeUrl
+      );
+
+      const payloadInHex = (function () {
+        const se = new bcs.BcsSerializer()
+        scriptFunction.serialize(se)
+        return hexlify(se.getBytes())
+      })()
+      const txParams = {
+        data: payloadInHex,
+      }
+
+      const transactionHash = await new providers.Web3Provider(window.starcoin, 'any') 
+        .getSigner()
+        .sendUncheckedTransaction(txParams)
+  
+      // const response = await provider?.signAndSubmit(transactionPyld, options);
+
+      if (!transactionHash) {
+        throw new Error('No response');
+      }
+      return transactionHash;
     } catch (error: any) {
       this.emit('error', new WalletSignTransactionError(error));
       throw error;
@@ -249,37 +314,61 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
   }
 
   async signAndSubmitTransaction(
-    transactionPyld: Types.TransactionPayload,
+    transactionPyld: any,
     options?: any
   ): Promise<{ hash: Types.HexEncodedBytes }> {
     try {
       const wallet = this._wallet;
       const provider = this._provider || window.starcoin;
       if (!wallet || !provider) throw new WalletNotConnectedError();
-      const response = await provider?.signAndSubmit(transactionPyld, options);
 
-      if (!response || !response.success) {
+      const functionId = '0x1::TransferScripts::peer_to_peer_v2';
+      const strTypeArgs = ['0x1::STC::STC'];
+      const toAccount = transactionPyld.arguments[0];
+      const sendAmount = parseFloat(transactionPyld.arguments[1]);
+      const BIG_NUMBER_NANO_STC_MULTIPLIER = new BigNumber('1000000000');
+      const sendAmountSTC = new BigNumber(String(sendAmount), 10);
+      const sendAmountNanoSTC = sendAmountSTC.times(
+        BIG_NUMBER_NANO_STC_MULTIPLIER
+      );
+      const args = [toAccount, sendAmountNanoSTC]
+      const nodeUrl = this._nodeUrlMap[window.starcoin.networkVersion]
+      const scriptFunction = await utils.tx.encodeScriptFunctionByResolve(
+        functionId,
+        strTypeArgs,
+        args,
+        nodeUrl
+      );
+
+      const payloadInHex = (function () {
+        const se = new bcs.BcsSerializer()
+        scriptFunction.serialize(se)
+        return hexlify(se.getBytes())
+      })()
+      const txParams = {
+        data: payloadInHex,
+      }
+
+      const transactionHash = await new providers.Web3Provider(window.starcoin, 'any') 
+        .getSigner()
+        .sendUncheckedTransaction(txParams)
+  
+      // const response = await provider?.signAndSubmit(transactionPyld, options);
+
+      if (!transactionHash) {
         throw new Error('No response');
       }
-      return { hash: response.result.hash };
+      return { hash: transactionHash };
     } catch (error: any) {
       this.emit('error', new WalletSignAndSubmitMessageError(error.message));
       throw error;
     }
   }
 
-  async signMessage(messagePayload: SignMessagePayload): Promise<SignMessageResponse> {
+  async signMessage(messagePayload: any): Promise<any> {
     try {
-      const wallet = this._wallet;
-      const provider = this._provider || window.starcoin;
-      if (!wallet || !provider) throw new WalletNotConnectedError();
-
-      const response = await provider?.signMessage(messagePayload);
-      if (response.success) {
-        return response.result;
-      } else {
-        throw new Error('Sign Message failed');
-      }
+      // const response = await provider?.getSigner().signMessage(messagePayload);
+      throw new Error('Sign Message failed');
     } catch (error: any) {
       const errMsg = error.message;
       this.emit('error', new WalletSignMessageError(errMsg));
@@ -294,12 +383,12 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
       if (!wallet || !provider) throw new WalletNotConnectedError();
       const handleAccountChange = async (newAccount: string | undefined) => {
         // disconnect wallet if newAccount is undefined
-        if (newAccount === undefined) {
-          if (this.connected) {
-            await provider?.disconnect();
-          }
-          return;
-        }
+        // if (newAccount === undefined) {
+        //   // if (this.connected) {
+        //   //   await provider?.disconnect();
+        //   // }
+        //   return;
+        // }
         // const newPublicKey = await provider?.publicKey();
         this._wallet = {
           ...this._wallet,
