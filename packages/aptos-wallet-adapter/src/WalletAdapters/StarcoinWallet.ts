@@ -288,14 +288,17 @@ export class StarcoinWalletAdapter extends BaseWalletAdapter {
         nodeUrl
       );
 
+      
       const payloadInHex = (function () {
         const se = new bcs.BcsSerializer()
         scriptFunction.serialize(se)
+        console.log('hellu:', hexlify(se.getBytes()))
         return hexlify(se.getBytes())
       })()
       const txParams = {
         data: payloadInHex,
       }
+
 
       const transactionHash = await new providers.Web3Provider(window.starcoin, 'any') 
         .getSigner()
