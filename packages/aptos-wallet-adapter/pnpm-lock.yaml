@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@blocto/sdk': ^0.3.1
+  '@ethersproject/bytes': ^5.7.0
   '@fewcha/web3': 0.1.32
   '@keystonehq/aptossnap-adapter': ^0.2.8
   '@solana/web3.js': ^1.66.2
@@ -26,6 +27,7 @@ specifiers:
 
 dependencies:
   '@blocto/sdk': 0.3.1_2cswdir5lr7vnfmfdengdgoucu
+  '@ethersproject/bytes': 5.7.0
   '@fewcha/web3': 0.1.32
   '@keystonehq/aptossnap-adapter': 0.2.8
   '@solana/web3.js': 1.66.2

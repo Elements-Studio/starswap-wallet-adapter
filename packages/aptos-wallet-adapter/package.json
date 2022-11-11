@@ -1,7 +1,7 @@
 {
   "name": "starswap-wallet-adapter",
   "description": "starswap-wallet-adapter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@blocto/sdk": "^0.3.1",
+    "@ethersproject/bytes": "^5.7.0",
     "@fewcha/web3": "0.1.32",
     "@keystonehq/aptossnap-adapter": "^0.2.8",
     "@solana/web3.js": "^1.66.2",
