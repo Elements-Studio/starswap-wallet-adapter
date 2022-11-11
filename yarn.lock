@@ -213,14 +213,6 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@fewcha/web3@0.1.32":
-  "integrity" "sha512-5QrBit4XlDpg4b8UMmDHNxDL/or+1/mk688IbZZ6JSEnvFs15/FW60TTPBTzt9sQKLC+0fq7uMCi3JH/EoMZYg=="
-  "resolved" "https://registry.npmjs.org/@fewcha/web3/-/web3-0.1.32.tgz"
-  "version" "0.1.32"
-  dependencies:
-    "aptos" "^1.3.14"
-    "buffer" "^6.0.3"
-
 "@humanwhocodes/config-array@^0.11.6":
   "integrity" "sha512-kBbPWzN8oVMLb0hOUYXhmxggL/1cJE6ydvjDIGi9EnAGUyA7cLVKQg+d/Dsm+KZwx2czGHrCmMVLiyg8s5JPKw=="
   "resolved" "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.7.tgz"
@@ -271,16 +263,6 @@
   "version" "0.2.8"
   dependencies:
     "aptos" "^1.3.14"
-
-"@manahippo/aptos-wallet-adapter@file:/home/kokomi/kkkthors/project/aptos-wallet-adapter/packages/aptos-wallet-adapter":
-  "resolved" "file:packages/aptos-wallet-adapter"
-  "version" "1.0.2"
-  dependencies:
-    "@blocto/sdk" "^0.3.1"
-    "@fewcha/web3" "0.1.32"
-    "@keystonehq/aptossnap-adapter" "^0.2.8"
-    "eventemitter3" "^4.0.7"
-    "js-sha3" "^0.8.0"
 
 "@noble/ed25519@^1.6.0", "@noble/ed25519@^1.7.0":
   "integrity" "sha512-Rk4SkJFaXZiznFyC/t77Q0NKS4FL7TLJJsVG2V2oiEq3kJVeTdxysEe/yRWSpnWMe808XRDJ+VFh5pt/FN5plw=="
@@ -433,10 +415,17 @@
   "resolved" "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
   "version" "15.7.5"
 
-"@types/react@^18.0.17":
-  "integrity" "sha512-wRJWT6ouziGUy+9uX0aW4YOJxAY0bG6/AOk5AW5QSvZqI7dk6VBIbXvcVgIw/W5Jrl24f77df98GEKTJGOLx7Q=="
-  "resolved" "https://registry.npmjs.org/@types/react/-/react-18.0.24.tgz"
-  "version" "18.0.24"
+"@types/react-dom@^17.0.1":
+  "integrity" "sha512-rLVtIfbwyur2iFKykP2w0pl/1unw26b5td16d5xMgp7/yjTHomkyxPYChFoCr/FtEX1lN9wY6lFj1qvKdS5kDw=="
+  "resolved" "https://registry.npmjs.org/@types/react-dom/-/react-dom-17.0.18.tgz"
+  "version" "17.0.18"
+  dependencies:
+    "@types/react" "^17"
+
+"@types/react@^17", "@types/react@^17.0.2":
+  "integrity" "sha512-vwk8QqVODi0VaZZpDXQCmEmiOuyjEFPY7Ttaw5vjM112LOq37yz1CDJGrRJwA1fYEq4Iitd5rnjd1yWAc/bT+A=="
+  "resolved" "https://registry.npmjs.org/@types/react/-/react-17.0.52.tgz"
+  "version" "17.0.52"
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -578,7 +567,7 @@
   "resolved" "https://registry.npmjs.org/ansi-styles/-/ansi-styles-5.2.0.tgz"
   "version" "5.2.0"
 
-"aptos@^1.3.14", "aptos@^1.3.17":
+"aptos@^1.3.14", "aptos@^1.3.16":
   "integrity" "sha512-SPgWR9D0nHwLNpvxH943T9ieA2/Q0AVVsvT/qTUuWQSImxkxMVkb++XyWhiFyQpnZDqo6o2o0/fZakeUkqrc8w=="
   "resolved" "https://registry.npmjs.org/aptos/-/aptos-1.3.17.tgz"
   "version" "1.3.17"
@@ -678,6 +667,11 @@
   "version" "1.1.5"
   dependencies:
     "bindings" "^1.3.0"
+
+"bignumber.js@^9.1.0":
+  "integrity" "sha512-4LwHK4nfDOraBCtst+wOWIHbu1vhvAPJK8g8nROd4iuc3PSEjWif/qwbkh8jwCJz6yDBvtU4KPynETgrfh7y3A=="
+  "resolved" "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.1.0.tgz"
+  "version" "9.1.0"
 
 "bindings@^1.2.1", "bindings@^1.3.0", "bindings@^1.5.0":
   "integrity" "sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ=="
@@ -1129,12 +1123,12 @@
   dependencies:
     "prettier-linter-helpers" "^1.0.0"
 
-"eslint-plugin-react-hooks@^4.6.0":
+"eslint-plugin-react-hooks@^4.0.0":
   "integrity" "sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g=="
   "resolved" "https://registry.npmjs.org/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.6.0.tgz"
   "version" "4.6.0"
 
-"eslint-plugin-react@^7.30.1":
+"eslint-plugin-react@^7.19.0":
   "integrity" "sha512-e4N/nc6AAlg4UKW/mXeYWd3R++qUano5/o+t+wnWxIf+bLsOaH3a4q74kX3nDjYym3VBN4HyO9nEn1GcAqgQOA=="
   "resolved" "https://registry.npmjs.org/eslint-plugin-react/-/eslint-plugin-react-7.31.10.tgz"
   "version" "7.31.10"
@@ -2233,13 +2227,14 @@
   "resolved" "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   "version" "1.2.3"
 
-"react-dom@^18.2.0":
-  "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
-  "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
-  "version" "18.2.0"
+"react-dom@^17.0.1":
+  "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
+  "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
+  "version" "17.0.2"
   dependencies:
     "loose-envify" "^1.1.0"
-    "scheduler" "^0.23.0"
+    "object-assign" "^4.1.1"
+    "scheduler" "^0.20.2"
 
 "react-is@^16.13.1":
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
@@ -2250,6 +2245,14 @@
   "integrity" "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
+
+"react@^17.0.1", "react@17.0.2":
+  "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
+  "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
+  "version" "17.0.2"
+  dependencies:
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.1"
 
 "react@^18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
@@ -2380,6 +2383,14 @@
   "resolved" "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz"
   "version" "2.1.2"
 
+"scheduler@^0.20.2":
+  "integrity" "sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ=="
+  "resolved" "https://registry.npmjs.org/scheduler/-/scheduler-0.20.2.tgz"
+  "version" "0.20.2"
+  dependencies:
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.1"
+
 "scheduler@^0.23.0":
   "integrity" "sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw=="
   "resolved" "https://registry.npmjs.org/scheduler/-/scheduler-0.23.0.tgz"
@@ -2446,6 +2457,23 @@
   "integrity" "sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q=="
   "resolved" "https://registry.npmjs.org/slash/-/slash-3.0.0.tgz"
   "version" "3.0.0"
+
+"starswap-wallet-adapter@file:/home/kokomi/kkkthors/project/aptos-wallet-adapter/packages/aptos-wallet-adapter":
+  "resolved" "file:packages/aptos-wallet-adapter"
+  "version" "0.0.6"
+  dependencies:
+    "@blocto/sdk" "^0.3.1"
+    "@ethersproject/bytes" "^5.7.0"
+    "@keystonehq/aptossnap-adapter" "^0.2.8"
+    "@solana/web3.js" "^1.66.2"
+    "@starcoin/starcoin" "^2.3.1"
+    "aptos" "^1.3.16"
+    "bignumber.js" "^9.1.0"
+    "eventemitter3" "^4.0.7"
+    "js-sha3" "^0.8.0"
+    "msafe-iframe" "^1.0.8"
+    "react" "^17.0.1"
+    "react-dom" "^17.0.1"
 
 "string_decoder@^1.1.1":
   "integrity" "sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA=="
@@ -2586,7 +2614,7 @@
   "resolved" "https://registry.npmjs.org/type-fest/-/type-fest-0.20.2.tgz"
   "version" "0.20.2"
 
-"typescript@^3 || ^4", "typescript@^4.7.4", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
+"typescript@^3 || ^4", "typescript@^4.2.3", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
   "integrity" "sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ=="
   "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.8.4.tgz"
   "version" "4.8.4"
