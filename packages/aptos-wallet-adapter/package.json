@@ -1,11 +1,22 @@
 {
-  "name": "@manahippo/aptos-wallet-adapter",
-  "version": "1.0.2",
+  "name": "@starswap/starswap-wallet-adapter",
+  "description": "starswap-wallet-adapter",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
     "src",
     "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Elements-Studio/starswap-wallet-adapter.git"
+  },
+  "homepage": "https://github.com/Elements-Studio/starswap-wallet-adapter",
+  "keywords": [
+    "starcoin",
+    "wallets",
+    "adapter"
   ],
   "scripts": {
     "build": "rm -rf dist; tsc -p tsconfig.json"
