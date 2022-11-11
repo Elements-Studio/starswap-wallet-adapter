@@ -3,7 +3,7 @@ import { Button, Spin } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Types } from 'aptos';
-import { useWallet, SignMessageResponse} from '../.././aptos-wallet-adapter';
+import { useWallet, SignMessageResponse} from '../../aptos-wallet-adapter';
 import { aptosClient, faucetClient } from '../config/aptosClient';
 import { AptosAccount } from 'aptos';
 
