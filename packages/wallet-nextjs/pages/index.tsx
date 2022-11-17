@@ -28,7 +28,8 @@ const MainPage = () => {
     disconnecting,
     wallet: currentWallet,
     signMessage,
-    signTransaction
+    signTransaction,
+    network
   } = useWallet();
 
   const renderWalletConnectorGroup = () => {
@@ -223,6 +224,9 @@ const MainPage = () => {
           </strong>
           <strong>
             Address: <div id="address">{account?.address?.toString()}</div>
+          </strong>
+          <strong>
+            network: <div id="network">{JSON.stringify(network)}</div>
           </strong>
           <strong>
             Public Key:{' '}
